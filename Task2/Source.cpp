@@ -80,7 +80,8 @@ void inorderPowerTree(PowerNode* root) {
 void printPokemonsByPower(Pokemon pokemons[], int size, PowerNode* root) {
     if (root != nullptr) {
         printPokemonsByPower(pokemons, size, root->left); // Рекурсивный вывод покемонов из левого поддерева
-        std::cout << "Имя: " << pokemons[root->index].name << ", Сила: " << pokemons[root->index].power << ", Уровень: " << pokemons[root->index].level << ", ID: " << pokemons[root->index].id << std::endl << std::endl; // Вывод данных текущего покемона
+        std::cout << "Имя: " << pokemons[root->index].name << ", Сила: " << pokemons[root->index].power << ", Уровень: " 
+            << pokemons[root->index].level << ", ID: " << pokemons[root->index].id << std::endl << std::endl; // Вывод данных текущего покемона
         printPokemonsByPower(pokemons, size, root->right); // Рекурсивный вывод покемонов из правого поддерева
     }
 }
