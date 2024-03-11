@@ -49,7 +49,8 @@ void searchAndDisplayByAttributeValue(Node* head, int targetId) {
         if (current->data.id == targetId) {
             found = true;
             std::cout << "Найден покемон с ID " << targetId << ":" << std::endl;
-            std::cout << "Имя: " << current->data.name << ", Сила: " << current->data.power << ", Уровень: " << current->data.level << ", ID: " << current->data.id << std::endl;
+            std::cout << "Имя: " << current->data.name << ", Сила: " << current->data.power << ", Уровень: " 
+                << current->data.level << ", ID: " << current->data.id << std::endl;
         }
         current = current->next;
     }
