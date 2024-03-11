@@ -149,7 +149,8 @@ int main() {
     PowerNode* foundNode = searchPowerTree(root, searchPower);
     if (foundNode != nullptr) {
         std::cout << "Найден покемон:" << std::endl;
-        std::cout << "Имя: " << pokemons[foundNode->index].name << ", Сила: " << pokemons[foundNode->index].power << ", Уровень: " << pokemons[foundNode->index].level << ", ID: " << pokemons[foundNode->index].id << std::endl;
+        std::cout << "Имя: " << pokemons[foundNode->index].name << ", Сила: " << pokemons[foundNode->index].power << ", Уровень: " 
+            << pokemons[foundNode->index].level << ", ID: " << pokemons[foundNode->index].id << std::endl;
     }
     else {
         std::cout << "Покемон с данной силой не найден." << std::endl;
@@ -162,7 +163,9 @@ int main() {
     foundNode = searchPowerTree(root, editPower);
     if (foundNode != nullptr) {
         std::cout << "Текущие данные покемона:" << std::endl;
-        std::cout << "Имя: " << pokemons[foundNode->index].name << ", Сила: " << pokemons[foundNode->index].power << ", Уровень: " << pokemons[foundNode->index].level << ", ID: " << pokemons[foundNode->index].id << std::endl;
+        std::cout << "Имя: " << pokemons[foundNode->index].name << ", Сила: " 
+            << pokemons[foundNode->index].power << ", Уровень: " 
+            << pokemons[foundNode->index].level << ", ID: " << pokemons[foundNode->index].id << std::endl;
 
         std::string newName;
         int newPower;
