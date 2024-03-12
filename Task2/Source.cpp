@@ -126,7 +126,7 @@ PowerNode* deletePowerNode(PowerNode* root, int power) {
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian"); // Установка локали для русского языка
+    //setlocale(LC_ALL, "Russian"); // Установка локали для русского языка
     Pokemon pokemons[100]; // Массив покемонов
     int size = 0; // Размер массива покемонов
     randomInputData(pokemons, size); // Заполнение массива случайными данными

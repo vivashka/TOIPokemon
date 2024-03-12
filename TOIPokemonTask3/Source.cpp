@@ -83,6 +83,15 @@ void printList(Node* head) {
     }
 }
 
+// Процедура для удаления записи по ключу из массива товаров и массива индексов для рейтинга
+void DeleteRateRecord(Pokemon* pokemon, Node* rateIndex, int& size, int index) {
+    for (int i = index; i < size - 1; ++i) {
+        pokemon[i] = pokemon[i + 1];
+        rateIndex[i] = rateIndex[i + 1];
+    }
+    --size;
+}
+
 int main() {
     srand(time(nullptr)); // Инициализация генератора случайных чисел
     setlocale(LC_ALL, "Russian");
