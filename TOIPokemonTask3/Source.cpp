@@ -1,105 +1,108 @@
 #include <iostream>
 #include <string>
 
+// РЎС‚СЂСѓРєС‚СѓСЂР°, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰Р°СЏ РїРѕРєРµРјРѕРЅР°
 struct Pokemon {
-    std::string name;
-    int power;
-    int level;
-    int id;
+    std::string name; // РРјСЏ РїРѕРєРµРјРѕРЅР°
+    int power;        // РЎРёР»Р° РїРѕРєРµРјРѕРЅР°
+    int level;        // РЈСЂРѕРІРµРЅСЊ РїРѕРєРµРјРѕРЅР°
+    int id;           // РРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїРѕРєРµРјРѕРЅР°
 };
 
+// РЎС‚СЂСѓРєС‚СѓСЂР°, РїСЂРµРґСЃС‚Р°РІР»СЏСЋС‰Р°СЏ СѓР·РµР» СЃРІСЏР·Р°РЅРЅРѕРіРѕ СЃРїРёСЃРєР°
 struct Node {
-    Pokemon data; // Данные хранящиеся в узле списка
-    Node* next; // Указатель на следующий узел
+    Pokemon data; // Р”Р°РЅРЅС‹Рµ, С…СЂР°РЅРёРјС‹Рµ РІ СѓР·Р»Рµ
+    Node* next;   // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СѓР·РµР»
 };
 
-// Процедура вставки элемента в отсортированный список
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІСЃС‚Р°РІРєРё РґР°РЅРЅС‹С… РІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ РїРѕ ID СЃРІСЏР·Р°РЅРЅС‹Р№ СЃРїРёСЃРѕРє
 void insertSorted(Node*& head, const Pokemon& newData) {
-    Node* newNode = new Node; // Создание нового узла
-    newNode->data = newData; // Заполнение данных нового узла
-    newNode->next = nullptr; // Новый узел еще не указывает на следующий
+    Node* newNode = new Node;   // РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕРіРѕ СѓР·Р»Р°
+    newNode->data = newData;    // РџСЂРёСЃРІРѕРµРЅРёРµ РЅРѕРІС‹Рј РґР°РЅРЅС‹Рј
+    newNode->next = nullptr;    // РќРѕРІС‹Р№ СѓР·РµР» РїРѕРєР° РЅРµ СЃРІСЏР·Р°РЅ СЃ РґСЂСѓРіРёРјРё
 
-    // Если список пуст или новый узел должен быть первым
+    // Р•СЃР»Рё СЃРїРёСЃРѕРє РїСѓСЃС‚ РёР»Рё РїРµСЂРІС‹Р№ СЌР»РµРјРµРЅС‚ РёРјРµРµС‚ ID Р±РѕР»СЊС€Рµ РёР»Рё СЂР°РІРЅС‹Р№ РЅРѕРІРѕРјСѓ, РІСЃС‚Р°РІР»СЏРµРј РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ РІ РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°
     if (head == nullptr || head->data.id >= newData.id) {
-        newNode->next = head; // Связываем новый узел со старым началом списка
-        head = newNode; // Новый узел становится началом списка
-        return; // Завершаем процедуру
+        newNode->next = head; // РЎРІСЏР·С‹РІР°РµРј РЅРѕРІС‹Р№ СѓР·РµР» СЃРѕ СЃС‚Р°СЂС‹Рј РЅР°С‡Р°Р»РѕРј СЃРїРёСЃРєР°
+        head = newNode;       // РќРѕРІС‹Р№ СѓР·РµР» СЃС‚Р°РЅРѕРІРёС‚СЃСЏ РЅР°С‡Р°Р»РѕРј СЃРїРёСЃРєР°
+        return;               // Р—Р°РІРµСЂС€Р°РµРј С„СѓРЅРєС†РёСЋ
     }
 
-    // Поиск места для вставки нового узла
+    // РџРѕРёСЃРє РјРµСЃС‚Р° РґР»СЏ РІСЃС‚Р°РІРєРё РЅРѕРІРѕРіРѕ СѓР·Р»Р°
     Node* current = head;
     while (current->next != nullptr && current->next->data.id < newData.id) {
         current = current->next;
     }
 
-    // Вставка нового узла после текущего
+    // Р’СЃС‚Р°РІРєР° РЅРѕРІРѕРіРѕ СѓР·Р»Р°
     newNode->next = current->next;
     current->next = newNode;
 }
 
-// Функция для вывода записей с заданным значением атрибута
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїРѕРёСЃРєР° Рё РІС‹РІРѕРґР° РїРѕРєРµРјРѕРЅР° РїРѕ РµРіРѕ ID
 void searchAndDisplayByAttributeValue(Node* head, int targetId) {
     Node* current = head;
     bool found = false;
 
-    // Поиск узлов с заданным значением ID и вывод их данных
+    // РџРѕРёСЃРє РїРѕРєРµРјРѕРЅР° РїРѕ РµРіРѕ ID Рё РІС‹РІРѕРґ РµРіРѕ РґР°РЅРЅС‹С…
     while (current != nullptr) {
         if (current->data.id == targetId) {
             found = true;
-            std::cout << "Найдена запись с ID " << targetId << ":" << std::endl;
-            std::cout << "Name: " << current->data.name << ", Power: " << current->data.power << ", Level: " << current->data.level << ", ID: " << current->data.id << std::endl;
+            std::cout << "РќР°Р№РґРµРЅ РїРѕРєРµРјРѕРЅ СЃ ID " << targetId << ":" << std::endl;
+            std::cout << "РРјСЏ: " << current->data.name << ", РЎРёР»Р°: " << current->data.power << ", РЈСЂРѕРІРµРЅСЊ: " 
+                << current->data.level << ", ID: " << current->data.id << std::endl;
         }
         current = current->next;
     }
 
-    // Если не найдено ни одной записи с заданным ID
+    // Р•СЃР»Рё РїРѕРєРµРјРѕРЅ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј ID РЅРµ РЅР°Р№РґРµРЅ
     if (!found) {
-        std::cout << "Запись с ID " << targetId << " не найдена." << std::endl;
+        std::cout << "РџРѕРєРµРјРѕРЅ СЃ ID " << targetId << " РЅРµ РЅР°Р№РґРµРЅ." << std::endl;
     }
 }
 
-// Процедура для рандомизированного ввода данных
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РіРµРЅРµСЂР°С†РёРё СЃР»СѓС‡Р°Р№РЅС‹С… РґР°РЅРЅС‹С… РїРѕРєРµРјРѕРЅРѕРІ Рё РёС… РІСЃС‚Р°РІРєРё РІ СЃРїРёСЃРѕРє
 void randomInputData(Node*& head, int amount) {
     std::string Names[11] = { "Bulbasaur", "Raikachu", "Caterpie", "Pidgeot", "Meowth", "Rattata", "Clefairy", "Zubat", "Psyduck", "Abra", "Golem" };
 
-    // Заполнение списка случайными данными
+    // Р“РµРЅРµСЂР°С†РёСЏ Рё РІСЃС‚Р°РІРєР° СЃР»СѓС‡Р°Р№РЅС‹С… РїРѕРєРµРјРѕРЅРѕРІ
     for (int i = 0; i < amount; ++i) {
         Pokemon newPokemon = { Names[rand() % 11], rand() % 436 + 1, rand() % 97 + 4, rand() % 9000 + 1000 };
         insertSorted(head, newPokemon);
     }
 }
 
-// Процедура для вывода всего списка
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ РІС‹РІРѕРґР° РІСЃРµРіРѕ СЃРїРёСЃРєР° РїРѕРєРµРјРѕРЅРѕРІ
 void printList(Node* head) {
     Node* current = head;
 
-    // Вывод данных каждого узла списка
+    // Р’С‹РІРѕРґ РґР°РЅРЅС‹С… РєР°Р¶РґРѕРіРѕ СѓР·Р»Р° СЃРїРёСЃРєР°
     while (current != nullptr) {
-        std::cout << "Name: " << current->data.name << ", Power: " << current->data.power << ", Level: " << current->data.level << ", ID: " << current->data.id << std::endl;
+        std::cout << "РРјСЏ: " << current->data.name << ", РЎРёР»Р°: " << current->data.power << ", РЈСЂРѕРІРµРЅСЊ: " << current->data.level << ", ID: " << current->data.id << std::endl;
         current = current->next;
     }
 }
 
 int main() {
-    srand(time(nullptr)); // Инициализация генератора случайных чисел
+    srand(time(nullptr)); // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РіРµРЅРµСЂР°С‚РѕСЂР° СЃР»СѓС‡Р°Р№РЅС‹С… С‡РёСЃРµР»
     setlocale(LC_ALL, "Russian");
 
-    Node* head = nullptr; // Указатель на начало списка
+    Node* head = nullptr; // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°С‡Р°Р»Рѕ СЃРїРёСЃРєР°
     int amount;
-    std::cout << "Введите количество покемонов: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїРѕРєРµРјРѕРЅРѕРІ: ";
     std::cin >> amount;
 
-    randomInputData(head, amount); // Рандомизированный ввод данных
+    randomInputData(head, amount); // Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅС‹С… РґР°РЅРЅС‹С…
 
-    std::cout << "Список всех покемонов:" << std::endl;
-    printList(head); // Вывод списка покемонов
+    std::cout << "РЎРїРёСЃРѕРє РІСЃРµС… РїРѕРєРµРјРѕРЅРѕРІ:" << std::endl;
+    printList(head); // Р’С‹РІРѕРґ СЃРїРёСЃРєР° РїРѕРєРµРјРѕРЅРѕРІ
 
     int searchId;
-    std::cout << "Введите ID для поиска: ";
+    std::cout << "Р’РІРµРґРёС‚Рµ ID РґР»СЏ РїРѕРёСЃРєР°: ";
     std::cin >> searchId;
-    searchAndDisplayByAttributeValue(head, searchId); // Поиск и вывод покемона по ID
+    searchAndDisplayByAttributeValue(head, searchId); // РџРѕРёСЃРє Рё РІС‹РІРѕРґ РїРѕРєРµРјРѕРЅР° РїРѕ ID
 
-    // Очистка памяти, выделенной под список
+    // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ РїР°РјСЏС‚Рё, РІС‹РґРµР»РµРЅРЅРѕР№ РїРѕРґ СЃРїРёСЃРѕРє
     while (head != nullptr) {
         Node* temp = head;
         head = head->next;
