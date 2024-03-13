@@ -44,16 +44,16 @@ void bubblePowerSort(Power pokemons[], int n) {
     }
 }
 
-// Процедура для сортировки массива индексов для уровня методом пузырька
-void bubbleLevelSort(Level pokemons[], int n) {
-    for (int i = 0; i < n - 1; ++i) {
-        for (int j = 0; j < n - i - 1; ++j) {
-            if (pokemons[j].level < pokemons[j + 1].level) {
-                Level temp = pokemons[j];
-                pokemons[j] = pokemons[j + 1];
-                pokemons[j + 1] = temp;
-            }
+// Процедура для сортировки массива индексов для уровня методом вставок
+void insertionLevelSort(Level pokemons[], int n) {
+    for (int i = 1; i < n; ++i) {
+        Level key = pokemons[i];
+        int j = i - 1;
+        while (j >= 0 && pokemons[j].level < key.level) {
+            pokemons[j + 1] = pokemons[j];
+            --j;
         }
+        pokemons[j + 1] = key;
     }
 }
 
@@ -140,7 +140,7 @@ void deleteLevelRecord(Pokemon* pokemons, Level* levelIndex, int& size, int inde
 }
 
 int main() {
-    setlocale(LC_ALL, "Russian");
+    //setlocale(LC_ALL, "Russian");
     int arraySize = 6; // Размер массива покемонов
     Pokemon* pokemons = new Pokemon[arraySize]; // Выделение памяти под массив покемонов
     randomInputData(pokemons, arraySize); // Заполнение массива случайными данными
@@ -176,20 +176,29 @@ int main() {
     // Сортировка массива индексов для силы
     std::cout << "\n------------------------Сортировка массива для силы------------------------------" << std::endl;
     bubblePowerSort(powerIndex, arraySize);
+    Pokemon* tempPokemons = new Pokemon[arraySize];
     for (int i = 0; i < arraySize; ++i) {
-        pokemons[i].power = powerIndex[i].power;
+        tempPokemons[i] = pokemons[powerIndex[i].index];
+    }
+    
+    // Замена исходного массива покемонов
+    for (int i = 0; i < arraySize; ++i) {
+        pokemons[i] = tempPokemons[i];
         powerIndex[i].index = i;
+        levelIndex[i].index = i;
+        levelIndex[i].level = pokemons[i].level;
         std::cout << "Name: " << pokemons[i].name << ", Power: " << pokemons[i].power <<
             ", Level: " << pokemons[i].level << ", ID: " << pokemons[i].id
             << ", Index: " << powerIndex[i].index << std::endl;
     }
-
-
     // Сортировка массива индексов для уровня
     std::cout << "-----------------------Сортировка массива индексов для уровня-------------------------------" << std::endl;
-    bubbleLevelSort(levelIndex, arraySize);
+    insertionLevelSort(levelIndex, arraySize);
     for (int i = 0; i < arraySize; ++i) {
-        pokemons[i].level = levelIndex[i].level;
+        tempPokemons[i] = pokemons[levelIndex[i].index];
+    }
+    for (int i = 0; i < arraySize; ++i) {
+        pokemons[i] = tempPokemons[i];
         levelIndex[i].index = i;
         std::cout << "Name: " << pokemons[i].name << ", Power: " << pokemons[i].power <<
             ", Level: " << pokemons[i].level << ", ID: " << pokemons[i].id

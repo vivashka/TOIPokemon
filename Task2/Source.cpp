@@ -24,7 +24,8 @@ int Random(int start, int end) {
 
 // Функция для заполнения массива покемонов случайными данными
 void randomInputData(Pokemon pokemons[], int& size) {
-    std::string Names[11]{ "Bulbasaur", "Raikachu", "Caterpie", "Pidgeot", "Meowth", "Rattata", "Clefairy", "Zubat", "Psyduck", "Abra", "Golem" };
+    std::string Names[11]{ "Bulbasaur", "Raikachu", "Caterpie", "Pidgeot", "Meowth", "Rattata", 
+        "Clefairy", "Zubat", "Psyduck", "Abra", "Golem" };
     int amount;
     std::cout << "Введите количество покемонов: ";
     std::cin >> amount;
@@ -80,8 +81,8 @@ void inorderPowerTree(PowerNode* root) {
 void printPokemonsByPower(Pokemon pokemons[], int size, PowerNode* root) {
     if (root != nullptr) {
         printPokemonsByPower(pokemons, size, root->left); // Рекурсивный вывод покемонов из левого поддерева
-        std::cout << "Имя: " << pokemons[root->index].name << ", Сила: " << pokemons[root->index].power << ", Уровень: " 
-            << pokemons[root->index].level << ", ID: " << pokemons[root->index].id << std::endl << std::endl; // Вывод данных текущего покемона
+        std::cout << "Имя: " << pokemons[root->index].name << ", Сила: " << pokemons[root->index].power << ", Уровень: "
+            << pokemons[root->index].level << ", ID: " << pokemons[root->index].id << std::endl; // Вывод данных текущего покемона
         printPokemonsByPower(pokemons, size, root->right); // Рекурсивный вывод покемонов из правого поддерева
     }
 }

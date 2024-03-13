@@ -83,18 +83,38 @@ void printList(Node* head) {
     }
 }
 
-// Процедура для удаления записи по ключу из массива товаров и массива индексов для рейтинга
-void DeleteRateRecord(Pokemon* pokemon, Node* rateIndex, int& size, int index) {
-    for (int i = index; i < size - 1; ++i) {
-        pokemon[i] = pokemon[i + 1];
-        rateIndex[i] = rateIndex[i + 1];
+
+// Функция для удаления узла из списка по его ID
+void removeNodeByID(Node*& head, int id) {
+    if (head == nullptr) {
+        return; // Если список пуст, ничего делать не нужно
     }
-    --size;
+
+    // Если удаляемый узел - первый в списке
+    if (head->data.id == id) {
+        Node* temp = head; // Временный указатель на удаляемый узел
+        head = head->next; // Перемещаем указатель на начало списка на следующий узел
+        delete temp; // Освобождаем память, занимаемую удаляемым узлом
+        return; // Завершаем функцию
+    }
+
+    // Если удаляемый узел не первый в списке
+    Node* current = head;
+    while (current->next != nullptr && current->next->data.id != id) {
+        current = current->next; // Переходим к следующему узлу
+    }
+
+    // Проверяем, был ли найден узел для удаления
+    if (current->next != nullptr) {
+        Node* temp = current->next; // Временный указатель на удаляемый узел
+        current->next = current->next->next; // Пропускаем удаляемый узел в списке
+        delete temp; // Освобождаем память, занимаемую удаляемым узлом
+    }
 }
 
 int main() {
     srand(time(nullptr)); // Инициализация генератора случайных чисел
-    setlocale(LC_ALL, "Russian");
+    //setlocale(LC_ALL, "Russian");
 
     Node* head = nullptr; // Указатель на начало списка
     int amount;
@@ -107,6 +127,12 @@ int main() {
     printList(head); // Вывод списка покемонов
 
     int searchId;
+    std::cout << "Введите ID для удаления: ";
+    std::cin >> searchId;
+    removeNodeByID(head, searchId); // Удаление узла из списка по ID
+
+    printList(head);
+    
     std::cout << "Введите ID для поиска: ";
     std::cin >> searchId;
     searchAndDisplayByAttributeValue(head, searchId); // Поиск и вывод покемона по ID
